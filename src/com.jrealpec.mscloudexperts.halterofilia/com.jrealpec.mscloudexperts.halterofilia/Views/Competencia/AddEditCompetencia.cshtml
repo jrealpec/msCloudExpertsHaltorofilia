@@ -1,0 +1,99 @@
+﻿@using com.jrealpec.mscloudexperts.halterofilia.Controllers
+@model com.jrealpec.mscloudexperts.halterofilia.Models.Competencia
+@{
+   ViewData["Title"] = "AddUpdateCompetencia";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="card-header" style="font-size: large;margin-top: 9px;">
+    <i class="fa fa-align-justify"></i>
+    @if (Model.CodCompetencia > 0)
+    {
+        <span>Update Competencia</span>
+    }
+    else
+    {
+        <span>Add Competencia</span>
+    }
+</div>
+@using (Html.BeginForm("AddEditCompetencia", "Competencia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(Model => Model.CodCompetencia, new { @id = "CodCompetencia" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Etapa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                Etapa 1:
+                @Html.RadioButtonFor(m => m.Etapa, 1, new { @id = "Etapa", htmlAttributes = new { @class = "form-control" } })
+                Etapa 2:
+                @Html.RadioButtonFor(m => m.Etapa, 2, new { @id = "Etapa", htmlAttributes = new { @class = "form-control" } })
+                Etapa 3:
+                @Html.RadioButtonFor(m => m.Etapa, 3, new { @id = "Etapa", htmlAttributes = new { @class = "form-control" } })
+
+
+            </div>
+            <span style = "margin-left: 15px" asp-validation-for="Etapa" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label class="control-label col-md-2">Pais: </label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.CodPais, ViewBag.PaisList as SelectList,"--Seleccione Pais--",
+             new { @id = "CodPais", @class = "form-control", @placeholder = "Select Pais" })
+                @Html.ValidationMessageFor(m => m.CodPais, null, new { @class = "text-danger error" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Modalidad: </label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.CodModalidad, ViewBag.ModalidadList as SelectList,"--Seleccione Modalidad--",
+             new { @id = "CodModalidad", @class = "form-control", @placeholder = "Select Modalidad" })
+                @Html.ValidationMessageFor(m => m.CodModalidad, null, new { @class = "text-danger error" })
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="control-label col-md-2">Deportista: </label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.CodDeportista, ViewBag.DeportistaList as SelectList,"--Seleccione Deportista--",
+             new { @id = "CodDeportista", @class = "form-control", @placeholder = "Select Deportista" })
+                @Html.ValidationMessageFor(m => m.CodDeportista, null, new { @class = "text-danger error" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Cantidad, new { @id = "Cantidad", htmlAttributes = new { @class = "form-control", @placeholder = "Cantidad" } })
+                @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-4">
+            @if (Model.CodCompetencia == 0)
+            {
+                <input type="submit" value="Save" class="btn btn-success btn-default">
+            }
+            else
+            {
+                <input type="submit" value="Update" class="btn btn-success btn-default" id="submit">
+
+            }
+            @Html.ActionLink("Back", "Index", "Competencia", null, new { @class = "btn btn-default" })
+
+        </div>
+    </div>
+}
+@section Scripts
+{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+}
